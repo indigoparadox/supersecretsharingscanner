@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SuperSecretSharingScanner</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="lbl_shares">Shares:</string>
+    <string name="btn_scan">Scan QR/Barcode</string>
+    <string name="btn_combine">Combine Shares</string>
+
+</resources>
