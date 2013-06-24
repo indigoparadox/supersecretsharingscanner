@@ -4,45 +4,64 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-	<TableRow android:id="@+id/tableRow1" android:layout_width="wrap_content"
-		android:layout_height="wrap_content">
+	<TableRow
+	    android:id="@+id/rowLabel"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" >
 
 		<TextView
 		    android:id="@+id/lblShares"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:text="@string/lbl_shares" />
-
-	</TableRow>
-
-	<TableRow android:id="@+id/tableRow2" android:layout_width="wrap_content"
-		android:layout_height="wrap_content">
-
-		<EditText
-		    android:id="@+id/txtShares"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="1"
-		    android:ems="10"
-		    android:inputType="textMultiLine"
-		    android:lines="6" />
+		    android:text="@string/lbl_shares"
+		    android:textAppearance="?android:attr/textAppearanceLarge" />
 
 	</TableRow>
 
 	<TableRow
-	    android:id="@+id/tableRow3"
+	    android:id="@+id/rowShareList"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" >
+
+		<TextView
+		    android:id="@+id/lblSharesArray"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	</TableRow>
+
+	<TableRow
+	    android:id="@+id/rowShareEntry"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" >
+
+		<EditText
+		    android:id="@+id/txtShareEntry"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight=".9"
+		    android:ems="10" >
+
+		    <requestFocus />
+		</EditText>
+
+	</TableRow>
+
+	<TableRow
+	    android:id="@+id/rowButtons"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content" >
 
 		<Button
-		    android:id="@+id/button1"
+		    android:id="@+id/btnScan"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_weight=".5"
 		    android:text="@string/btn_scan" />
 
 		<Button
-		    android:id="@+id/button2"
+		    android:id="@+id/btnCombine"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:text="@string/btn_combine" />
