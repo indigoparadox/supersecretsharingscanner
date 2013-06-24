@@ -3,6 +3,8 @@ package info.interfinitydynamics.supersecretsharingscanner;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.tiemens.secretshare.exceptions.SecretShareException;
 import com.tiemens.secretshare.main.cli.MainCombine.CombineOutput;
@@ -46,6 +48,8 @@ public class CombineActivity extends Activity {
    }
 
    public String combineTAShares() {
+      String strOutputSecret = null;
+      
       //EditText txtShares = (EditText)findViewById( R.id.txtShares );
       
       //String[] aStrShares = txtShares.getText().toString().split( "[\\r\\n]+" );
@@ -60,15 +64,26 @@ public class CombineActivity extends Activity {
          CombineOutput ssssOutput = ssssInput.output();
          ssssOutput.print( psOutput );
          
-         Toast.makeText( this, new String( osOutput.toByteArray(),"UTF-8" ),
-            Toast.LENGTH_LONG ).show();
+         // We could conceivably use subclassing if the secret hadn't been 
+         // marked "private". There might be a better way to do this but
+         // quick and dirty should work for now. Feel free to submit 
+         // improvements!
+         String strOutput = new String( osOutput.toByteArray(),"UTF-8" );
+         // Toast.makeText( this, strOutput, Toast.LENGTH_LONG ).show();
+         Pattern ptnOutput = Pattern.compile( "secret.string = '(.+?)'" );
+         Matcher mtcOutput = ptnOutput.matcher( strOutput );
+         if( mtcOutput.find() ) {
+            strOutputSecret = mtcOutput.group( 1 );
+         } else {
+            throw new SecretShareException( "Output parsing failed." );
+         }
+         
+         // Toast.makeText( this, strOutputSecret, Toast.LENGTH_LONG ).show();
       } catch( SecretShareException ex ) {
-         Toast.makeText( this, "Invalid shares specified.",
-            Toast.LENGTH_LONG ).show();
+         Toast.makeText( this, ex.getMessage(), Toast.LENGTH_LONG ).show();
       } catch( UnsupportedEncodingException ex ) {
-         Toast.makeText( this, "Invalid shares specified.",
-            Toast.LENGTH_LONG ).show();
+         Toast.makeText( this, ex.getMessage(), Toast.LENGTH_LONG ).show();
       }
-      return "";
+      return strOutputSecret;
    }
 }
