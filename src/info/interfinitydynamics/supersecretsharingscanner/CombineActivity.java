@@ -32,6 +32,7 @@ public class CombineActivity extends Activity {
       protected String cStrShareString;
       
       public ShareData( int intShareNumIn, String strShareStringIn ) {
+         // TODO: Check specified share for validity.
          cIntShareNum = intShareNumIn;
          cStrShareString = strShareStringIn;
       }
@@ -59,7 +60,6 @@ public class CombineActivity extends Activity {
       final Button btnAddShare = (Button)findViewById( R.id.btnAddShare );
       btnAddShare.setOnClickListener( new View.OnClickListener() {
           public void onClick(View v) {
-             // TODO: Check specified share for validity.
              
              final EditText txtShareNum =
                 (EditText)findViewById( R.id.txtShareNum );
@@ -74,6 +74,9 @@ public class CombineActivity extends Activity {
                 // TODO: Warn about using a numerical share ID.
                 return;
              }
+             
+             txtShareNum.setText( "" );
+             txtShareString.setText( "" );
           }
       } );
       
