@@ -7,5 +7,6 @@
     <string name="lbl_shares">Shares:</string>
     <string name="btn_scan">Scan QR/Barcode</string>
     <string name="btn_combine">Combine Shares</string>
+    <string name="btn_addshare">Add to Shares</string>
 
 </resources>
