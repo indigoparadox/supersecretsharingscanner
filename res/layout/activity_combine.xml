@@ -37,14 +37,36 @@
 	    android:layout_height="wrap_content" >
 
 		<EditText
-		    android:id="@+id/txtShareEntry"
-		    android:layout_width="wrap_content"
+		    android:id="@+id/txtShareNumber"
+		    android:layout_width="0dp"
 		    android:layout_height="wrap_content"
-		    android:layout_weight=".9"
+		    android:layout_weight=".2"
+		    android:ems="10"
+		    android:inputType="number" />
+
+		<EditText
+		    android:id="@+id/txtShareEntry"
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:layout_weight=".8"
 		    android:ems="10" >
 
 		    <requestFocus />
 		</EditText>
+
+	</TableRow>
+
+	<TableRow
+	    android:id="@+id/tableRow1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" >
+
+		<Button
+		    android:id="@+id/btnAddShare"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_weight=".9"
+		    android:text="@string/btn_addshare" />
 
 	</TableRow>
 

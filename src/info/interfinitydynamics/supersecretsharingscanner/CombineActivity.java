@@ -32,6 +32,18 @@ public class CombineActivity extends Activity {
       super.onCreate( savedInstanceState );
       setContentView( R.layout.activity_combine );
       
+      final Button btnAddShare = (Button)findViewById( R.id.btnAddShare );
+      btnAddShare.setOnClickListener( new View.OnClickListener() {
+          public void onClick(View v) {
+             // TODO: Check specified share for validity.
+             
+             // TODO: Figure out some kind of list view layout so that a share
+             //       can be selected and deleted.
+             
+             
+          }
+      } );
+      
       final Button btnCombine = (Button)findViewById( R.id.btnCombine );
       btnCombine.setOnClickListener( new View.OnClickListener() {
           public void onClick(View v) {
