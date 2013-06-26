@@ -10,24 +10,20 @@
 	    android:layout_height="wrap_content" >
 
 		<TextView
-		    android:id="@+id/lblShares"
-		    android:layout_width="wrap_content"
+		    android:id="@+id/lblShareNum"
+		    android:layout_width="0dp"
 		    android:layout_height="wrap_content"
-		    android:text="@string/lbl_shares"
-		    android:textAppearance="?android:attr/textAppearanceLarge" />
-
-	</TableRow>
-
-	<TableRow
-	    android:id="@+id/rowShareList"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content" >
+		    android:layout_weight=".2"
+		    android:text="@string/lbl_share_num"
+		    android:textAppearance="?android:attr/textAppearanceSmall" />
 
 		<TextView
-		    android:id="@+id/lblSharesArray"
-		    android:layout_width="wrap_content"
+		    android:id="@+id/lblShareString"
+		    android:layout_width="0dp"
 		    android:layout_height="wrap_content"
-		    android:textAppearance="?android:attr/textAppearanceMedium" />
+		    android:layout_weight=".8"
+		    android:text="@string/lbl_share_str"
+		    android:textAppearance="?android:attr/textAppearanceSmall" />
 
 	</TableRow>
 
@@ -37,7 +33,7 @@
 	    android:layout_height="wrap_content" >
 
 		<EditText
-		    android:id="@+id/txtShareNumber"
+		    android:id="@+id/txtShareNum"
 		    android:layout_width="0dp"
 		    android:layout_height="wrap_content"
 		    android:layout_weight=".2"
@@ -45,7 +41,7 @@
 		    android:inputType="number" />
 
 		<EditText
-		    android:id="@+id/txtShareEntry"
+		    android:id="@+id/txtShareString"
 		    android:layout_width="0dp"
 		    android:layout_height="wrap_content"
 		    android:layout_weight=".8"
@@ -57,37 +53,57 @@
 	</TableRow>
 
 	<TableRow
-	    android:id="@+id/tableRow1"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content" >
-
-		<Button
-		    android:id="@+id/btnAddShare"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_weight=".9"
-		    android:text="@string/btn_addshare" />
-
-	</TableRow>
-
-	<TableRow
-	    android:id="@+id/rowButtons"
+	    android:id="@+id/rowBtnsAddShare"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content" >
 
 		<Button
 		    android:id="@+id/btnScan"
-		    android:layout_width="wrap_content"
+		    android:layout_width="0dp"
 		    android:layout_height="wrap_content"
 		    android:layout_weight=".5"
 		    android:text="@string/btn_scan" />
 
 		<Button
-		    android:id="@+id/btnCombine"
-		    android:layout_width="wrap_content"
+		    android:id="@+id/btnAddShare"
+		    android:layout_width="0dp"
 		    android:layout_height="wrap_content"
-		    android:text="@string/btn_combine" />
+		    android:layout_weight=".5"
+		    android:text="@string/btn_addshare" />
 
 	</TableRow>
 
+	<TableRow
+	    android:id="@+id/rowShareList"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" >
+
+	    <Spinner
+	        android:id="@+id/spnShares"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight=".9" />
+
+	</TableRow>
+
+	<TableRow
+	    android:id="@+id/rowBtnsProcShare"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" >
+
+	    <Button
+	        android:id="@+id/btnDelShare"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight=".5"
+	        android:text="@string/btn_delshare" />
+
+	    <Button
+	        android:id="@+id/btnCombine"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight=".5"
+	        android:text="@string/btn_combine" />
+
+	</TableRow>
 </TableLayout>
