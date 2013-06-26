@@ -2,7 +2,7 @@
 <TableLayout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent">
 
 	<TableRow
 	    android:id="@+id/rowLabel"
@@ -45,7 +45,8 @@
 		    android:layout_width="0dp"
 		    android:layout_height="wrap_content"
 		    android:layout_weight=".8"
-		    android:ems="10" >
+		    android:ems="10"
+		    android:inputType="text" >
 
 		    <requestFocus />
 		</EditText>
@@ -78,11 +79,13 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content" >
 
-	    <Spinner
-	        android:id="@+id/spnShares"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_weight=".9" />
+		<ListView
+		    android:id="@+id/lstShares"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1" >
+
+		</ListView>
 
 	</TableRow>
 
