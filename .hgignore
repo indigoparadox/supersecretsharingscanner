@@ -3,3 +3,5 @@ syntax: glob
 bin
 syntax: regexp
 ^libs/secretshare-v1\.1\.jar$
+syntax: regexp
+^libs/android-integration-2\.1\.jar$
