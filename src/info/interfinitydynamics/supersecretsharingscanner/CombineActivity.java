@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.tiemens.secretshare.exceptions.SecretShareException;
 import com.tiemens.secretshare.main.cli.MainCombine.CombineOutput;
 import com.tiemens.secretshare.main.cli.MainCombine.CombineInput;
@@ -34,7 +35,6 @@ public class CombineActivity extends Activity {
       protected String cStrShareString;
 
       public ShareData( int intShareNumIn, String strShareStringIn ) {
-         // TODO: Check specified share for validity.
          cIntShareNum = intShareNumIn;
          cStrShareString = strShareStringIn;
       }
@@ -44,23 +44,16 @@ public class CombineActivity extends Activity {
       }
    }
 
-   // Test string: "the number of shares to generate"
-   /*
-    * private String[] caShareArray = { "-k", "3", "-s1",
-    * "bigintcs:007468-65206e-756d62-657220-6f6620-736875-dfbe54-c94a99-ad0896-03dd4e-316518-77FA28"
-    * , "-s3",
-    * "bigintcs:007468-65206e-756d62-657220-6f6620-736902-f59561-08d2f1-68912f-2f9a6a-a5c4c4-18E0E9"
-    * , "-s4",
-    * "bigintcs:007468-65206e-756d62-657220-6f6620-73697b-9e138b-9f851e-977897-c5dfab-4a33bd-03161E"
-    * , };
-    */
-
    protected ArrayList<ShareData> caShrShareList = new ArrayList<ShareData>();
 
    @Override
    protected void onCreate( Bundle savedInstanceState ) {
       super.onCreate( savedInstanceState );
       setContentView( R.layout.activity_combine );
+      
+      // Ignore input to the result text box.
+      final EditText txtResult = (EditText)findViewById( R.id.txtResult );
+      txtResult.setKeyListener( null );
 
       final Button btnAddShare = (Button)findViewById( R.id.btnAddShare );
       btnAddShare.setOnClickListener( new View.OnClickListener() {
@@ -88,9 +81,6 @@ public class CombineActivity extends Activity {
 
          @Override
          public void onClick( View v ) {
-            /* Intent intent = new Intent( "com.google.zxing.client.android.SCAN" );
-            intent.putExtra( "SCAN_MODE", "QR_CODE_MODE" );
-            startActivityForResult( intent, 0 ); */
             IntentIntegrator itiScan = new IntentIntegrator( CombineActivity.this );
             itiScan.initiateScan();
          }
@@ -99,7 +89,11 @@ public class CombineActivity extends Activity {
       final Button btnCombine = (Button)findViewById( R.id.btnCombine );
       btnCombine.setOnClickListener( new View.OnClickListener() {
          public void onClick( View v ) {
-            combineTAShares( caShrShareList );
+            final EditText txtResult = (EditText)findViewById( R.id.txtResult );
+            String strResult = combineTAShares( caShrShareList );
+            if( null != strResult ) {
+               txtResult.setText( strResult );
+            }
          }
       } );
 
@@ -131,18 +125,45 @@ public class CombineActivity extends Activity {
    }
 
    @Override
-   public void onActivityResult( int intRequestCode, int intResultCode,
-      Intent intent ) {
-      if( 0 == intRequestCode ) {
+   public void onActivityResult(
+      int intRequestCode, int intResultCode, Intent iteIntent
+   ) {
+      IntentResult scrScanResult =
+         IntentIntegrator.parseActivityResult( intRequestCode, intResultCode, iteIntent );
+      if( null != scrScanResult ) {
          if( RESULT_OK == intResultCode ) {
-            String strContents = intent.getStringExtra( "SCAN_RESULT" );
-            String strFormat = intent.getStringExtra( "SCAN_RESULT_FORMAT" );
-            // TODO: Handle successful scan.
-
-            // Place the returned code in the add share edit box.
-            final EditText txtShareString =
-               (EditText)findViewById( R.id.txtShareString );
-            txtShareString.setText( strContents );
+            String strContents = iteIntent.getStringExtra( "SCAN_RESULT" );
+            
+            // Split up the share and number.
+            try {
+               String strShareString;
+               int intShareNum;
+               Pattern ptnShare = Pattern.compile( "([0-9]+) (bigintcs:[A-Za-z0-9\\-]+)" );
+               Matcher mtcShare = ptnShare.matcher( strContents );
+               if( mtcShare.find() ) {
+                  strShareString = mtcShare.group( 2 );
+                  intShareNum = Integer.parseInt( mtcShare.group( 1 ) );
+               } else {
+                  // TODO: Use a resource string.
+                  throw new SecretShareException( "Output parsing failed." );
+               }
+               
+               // Place the returned code in the add share edit box.
+               final EditText txtShareString =
+                  (EditText)findViewById( R.id.txtShareString );
+               txtShareString.setText( strShareString );
+               final EditText txtShareNum =
+                  (EditText)findViewById( R.id.txtShareNum );
+               txtShareNum.setText( Integer.toString( intShareNum ) );
+            } catch( NumberFormatException ex ) {
+               //Toast.makeText(
+               //   this, ex.getMessage(), Toast.LENGTH_LONG
+               //).show();
+               Toast.makeText(
+                  // TODO: Use a resource string.
+                  this, "Unable to parse scanned share.", Toast.LENGTH_LONG
+               ).show();
+            }
 
          } else if( RESULT_CANCELED == intResultCode ) {
             // TODO: Handle cancel.
@@ -192,6 +213,7 @@ public class CombineActivity extends Activity {
          if( mtcOutput.find() ) {
             strOutputSecret = mtcOutput.group( 1 );
          } else {
+            // TODO: Use a resource string.
             throw new SecretShareException( "Output parsing failed." );
          }
 

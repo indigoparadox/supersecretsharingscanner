@@ -4,6 +4,7 @@
     <string name="app_name">SuperSecretSharingScanner</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="lbl_result">Result:</string>
     <string name="lbl_share_num">Share #:</string>
     <string name="lbl_share_str">Share String:</string>
     <string name="btn_scan">Scan QR/Barcode</string>

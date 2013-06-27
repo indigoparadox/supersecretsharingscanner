@@ -3,7 +3,37 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
+    
+    	<TableRow
+	    android:id="@+id/rowLabel"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" >
 
+		<TextView
+		    android:id="@+id/lblResult"
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:layout_weight=".2"
+		    android:text="@string/lbl_result"
+		    android:textAppearance="?android:attr/textAppearanceSmall" />
+		
+		</TableRow>
+
+	<TableRow
+	    android:id="@+id/rowResult"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" >
+	    
+	    <EditText
+	        android:id="@+id/txtResult"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:ems="10"
+	        android:inputType="text" />
+
+	</TableRow>
+	    
 	<TableRow
 	    android:id="@+id/rowLabel"
 	    android:layout_width="wrap_content"
