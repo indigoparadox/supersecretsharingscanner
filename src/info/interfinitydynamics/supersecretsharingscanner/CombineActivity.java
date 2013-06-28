@@ -15,17 +15,21 @@ import com.tiemens.secretshare.main.cli.MainCombine.CombineInput;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 @SuppressLint("DefaultLocale")
 public class CombineActivity extends Activity {
@@ -59,15 +63,40 @@ public class CombineActivity extends Activity {
       btnAddShare.setOnClickListener( new View.OnClickListener() {
          public void onClick( View v ) {
 
+            String strShareString;
             final EditText txtShareNum =
                (EditText)findViewById( R.id.txtShareNum );
             final EditText txtShareString =
                (EditText)findViewById( R.id.txtShareString );
+            
             try {
-               addShare( Integer.parseInt( txtShareNum.getText().toString() ),
-                  txtShareString.getText().toString() );
+               Pattern ptnShareString = 
+                  Pattern.compile( "(bigintcs:[A-Za-z0-9\\-]+)" );
+               Matcher mtcShareString = 
+                  ptnShareString.matcher( txtShareString.getText().toString() );
+               if( mtcShareString.find() ) {
+                  strShareString = mtcShareString.group( 1 );
+               } else {
+                  // TODO: Use a resource string.
+                  throw new SecretShareException( "Invalid share format." );
+               }
+               
+               addShare( 
+                  Integer.parseInt( txtShareNum.getText().toString() ),
+                  strShareString
+               );
+            } catch( SecretShareException ex ) {
+               Toast.makeText(
+                  CombineActivity.this, ex.getMessage(), Toast.LENGTH_LONG
+               ).show();
+               return;
             } catch( NumberFormatException ex ) {
-               // TODO: Warn about using a numerical share ID.
+               Toast.makeText(
+                  CombineActivity.this,
+                  // TODO: Use a resource string.
+                  "Invalid share number format.",
+                  Toast.LENGTH_LONG
+               ).show();
                return;
             }
 
@@ -96,9 +125,51 @@ public class CombineActivity extends Activity {
             }
          }
       } );
-
-      // Populate the share listbox.
+      
       final ListView lstShares = (ListView)findViewById( R.id.lstShares );
+      lstShares.setOnItemClickListener( new OnItemClickListener() {
+         @Override
+         public void onItemClick(
+            AdapterView<?> advParent,
+            View viwView,
+            int intPosition,
+            long lngID
+         ) {
+            final ListView lstShares = (ListView)findViewById( R.id.lstShares );
+            final int intSelectedItem = intPosition;
+            
+            // Ask to delete selected item.
+            DialogInterface.OnClickListener lisDialogClickListener = 
+               new DialogInterface.OnClickListener() {
+               
+               @SuppressWarnings("unchecked")
+               @Override
+               public void onClick( DialogInterface dliDialog, int intWhich ) {
+                   switch( intWhich ){
+                   case DialogInterface.BUTTON_POSITIVE:
+                      //lstShares.
+                      
+                      caShrShareList.remove( intSelectedItem );
+                      
+                      ((ArrayAdapter<ShareData>)lstShares
+                         .getAdapter()).notifyDataSetChanged();
+
+                      break;
+                   }
+               }
+           };
+
+           AlertDialog.Builder adbBuilder = 
+              new AlertDialog.Builder( CombineActivity.this );
+           // TODO: Use a resource string.
+           adbBuilder.setMessage( "Delete this share?" )
+              .setPositiveButton( "Yes", lisDialogClickListener )
+              .setNegativeButton( "No", lisDialogClickListener )
+              .show();
+         }
+      } );
+      
+      // Populate the share listbox.
       ArrayAdapter<ShareData> adpShareAdapter =
          new ArrayAdapter<CombineActivity.ShareData>( getApplicationContext(),
             android.R.layout.simple_list_item_1, caShrShareList ) {
@@ -184,8 +255,10 @@ public class CombineActivity extends Activity {
       // Build a command line from the share list.
       ArrayList<String> aStrCommandLine = new ArrayList<String>();
       aStrCommandLine.add( "-k" );
-      aStrCommandLine.add( "3" );
+      // TODO: Implement a way to detect the threshold dynamically.
+      aStrCommandLine.add( Integer.toString( aShrShareDataIn.size() ) );
 
+      // Add each share to the command line.
       for( ShareData shrIter : aShrShareDataIn ) {
          aStrCommandLine.add( String.format( "-s%d", shrIter.cIntShareNum ) );
          aStrCommandLine.add( shrIter.cStrShareString );
