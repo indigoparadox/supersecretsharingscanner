@@ -5,7 +5,7 @@
     android:layout_height="fill_parent">
     
     	<TableRow
-	    android:id="@+id/rowLabel"
+	    android:id="@+id/rowResultLabel"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content" >
 
@@ -35,7 +35,7 @@
 	</TableRow>
 	    
 	<TableRow
-	    android:id="@+id/rowLabel"
+	    android:id="@+id/rowShareLabel"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content" >
 
@@ -125,17 +125,10 @@
 	    android:layout_height="wrap_content" >
 
 	    <Button
-	        android:id="@+id/btnDelShare"
-	        android:layout_width="0dp"
-	        android:layout_height="wrap_content"
-	        android:layout_weight=".5"
-	        android:text="@string/btn_delshare" />
-
-	    <Button
 	        android:id="@+id/btnCombine"
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
-	        android:layout_weight=".5"
+	        android:layout_weight="1"
 	        android:text="@string/btn_combine" />
 
 	</TableRow>
